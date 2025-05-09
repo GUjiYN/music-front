@@ -23,4 +23,19 @@ const GetAlbumListAPI = async (data: PageSearchDTO):Promise<BaseResponse<PageEnt
     return result;
 }
 
-export { GetAlbumListAPI }
+
+const CreateAlbumAPI = async (data: AlbumEntity):Promise<BaseResponse<AlbumEntity> | undefined> => {
+    const result = await BaseApi<BaseResponse<AlbumEntity>>(
+        MethodType.POST,
+        "/api/v1/album/create",
+        data,
+        null,
+        null,
+        { Authorization: `Bearer ${GetAuthorizationToken()}` },
+    );
+    console.log("CreateAlbumAPI返回结果:", result);
+    return result;
+}       
+
+
+export { GetAlbumListAPI, CreateAlbumAPI }

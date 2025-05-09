@@ -1,6 +1,6 @@
 export type AlbumEntity = {
     album_uuid?: string;
-    background?: string;
+    background_story?: string;
     cover_image?: string;
     created_at?: string;
     description?: string;
