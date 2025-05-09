@@ -30,6 +30,8 @@ import "./index.css";
 import {createRoot} from 'react-dom/client';
 import {BrowserRouter} from "react-router-dom";
 import {index} from "./router";
+import { Provider } from 'react-redux';
+import { store } from './store';
 
 // 确保根元素样式正确
 const rootElement = document.getElementById('root') as HTMLElement;
@@ -42,11 +44,13 @@ rootElement.style.padding = '0';
 const root = createRoot(rootElement);
 
 root.render(
-  <BrowserRouter>
-    <div className="w-full max-w-[100vw] overflow-x-hidden">
-      {index()}
-    </div>
-  </BrowserRouter>
+  <Provider store={store}>
+    <BrowserRouter>
+      <div className="w-full max-w-[100vw] overflow-x-hidden">
+        {index()}
+      </div>
+    </BrowserRouter>
+  </Provider>
 );
 
 

@@ -10,14 +10,17 @@ import { BaseApi, GetAuthorizationToken, MethodType } from "../assets/ts/base_ap
  * @returns 专辑列表
  */
 const GetAlbumListAPI = async (data: PageSearchDTO):Promise<BaseResponse<PageEntity<AlbumEntity>> | undefined> => {
-    return BaseApi<BaseResponse<PageEntity<AlbumEntity>>>(
+    console.log("调用GetAlbumListAPI, 入参:", data);
+    const result = await BaseApi<BaseResponse<PageEntity<AlbumEntity>>>(
         MethodType.GET,
         "/api/v1/album/list",
         null,
         data,
         null,
         { Authorization: `Bearer ${GetAuthorizationToken()}` },
-    )
+    );
+    console.log("GetAlbumListAPI返回结果:", result);
+    return result;
 }
 
 export { GetAlbumListAPI }

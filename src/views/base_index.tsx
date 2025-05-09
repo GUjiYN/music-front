@@ -6,6 +6,7 @@ import { GetAlbumListAPI } from "../api/album_api";
 import { AlbumEntity } from "../models/entity/album_entity";
 import { PageSearchDTO } from "../models/dto/page/page_search_dto";
 import { message } from "antd";
+import { useDispatch } from "react-redux";
 
 export function BaseIndex(): JSX.Element {
     const navigate = useNavigate();
@@ -23,23 +24,28 @@ export function BaseIndex(): JSX.Element {
     const [loading, setLoading] = useState(true);
     const [albumList, setAlbumList] = useState<AlbumEntity[]>([]);
     const [refreshOperate, setRefreshOperate] = useState(true);
+    const dispatch = useDispatch();
 
     useEffect(() => {
         const func = async () => {
             setLoading(true);
             const getResp = await GetAlbumListAPI(searchRequest);
-            if (getResp?.output === "Success") {
-                setAlbumList(getResp.data!.records || []);
+            if (getResp?.message === "OK") {
+                console.log("API 成功返回数据:", getResp);
+                console.log("获取到的records数据:", getResp.data?.data?.records);
+                console.log("records数据长度:", getResp.data?.data?.records?.length || 0);
+                setAlbumList(getResp.data?.data?.records || []);
+                console.log("设置后的albumList状态:", getResp.data?.data?.records || []);
             } else {
-                console.log(getResp);
-                alert(getResp?.message ?? "获取专辑列表失败");
+                console.error("API返回错误:", getResp);
+                message.error(getResp?.message || "获取专辑列表失败");
             }
             setLoading(false);
         };
         
         func().then();
         
-    }, [searchRequest]);
+    }, [dispatch, searchRequest]);
 
     return (
         <div className="w-full max-w-[100vw] overflow-x-hidden">
@@ -78,7 +84,8 @@ export function BaseIndex(): JSX.Element {
                         </div>
                     ) : (
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                            {albumList.length > 0 ? albumList.map((album) => (
+                            {(() => { console.log("渲染时的albumList:", albumList); return null; })()}
+                            {albumList && albumList.length > 0 ? albumList.map((album) => (
                                 <AlbumCard 
                                     key={album.album_uuid}
                                     id={album.album_uuid || ""}
@@ -90,7 +97,7 @@ export function BaseIndex(): JSX.Element {
                                 />
                             )) : (
                                 <div className="col-span-4 text-center py-12 text-gray-500">
-                                    暂无专辑数据
+                                    暂无专辑数据 (albumList长度: {albumList ? albumList.length : 'null/undefined'})
                                 </div>
                             )}
                         </div>

@@ -39,6 +39,9 @@ async function BaseApi<E>(
     pathData: string | null,
     headers: Record<string, string> | null
 ): Promise<E | undefined> {
+    console.log(`[API请求开始] ${method} ${makeURL(url, pathData)}`);
+    console.log("请求参数:", { body: bodyData, params: paramData, path: pathData, headers: headers });
+    
     return axios({
         method: method,
         url: makeURL(url, pathData),
@@ -46,15 +49,25 @@ async function BaseApi<E>(
         params: paramData,
         headers: pushHeader(headers)
     }).then((response: AxiosResponse<E, object>) => {
+        console.log(`[API响应成功] ${method} ${makeURL(url, pathData)}`);
+        console.log("响应数据:", response.data);
         return response.data;
     }).catch((error) => {
-        console.error("[API] 请求出现问题", error);
-        const getResponse: E = error.response.data
-        if (getResponse) {
-            return getResponse;
+        console.error("[API响应错误]", error);
+        if (error.response) {
+            console.error("错误状态码:", error.response.status);
+            console.error("错误响应数据:", error.response.data);
+            const getResponse: E = error.response.data;
+            if (getResponse) {
+                return getResponse;
+            }
+        } else if (error.request) {
+            console.error("没有收到响应:", error.request);
+        } else {
+            console.error("请求配置错误:", error.message);
         }
     }).finally(() => {
-        console.log("[API] 请求 [" + method + "] " + makeURL(url, pathData) + " 接口");
+        console.log(`[API请求完成] ${method} ${makeURL(url, pathData)}`);
     });
 }
 
