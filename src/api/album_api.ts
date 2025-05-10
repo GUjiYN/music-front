@@ -35,7 +35,25 @@ const CreateAlbumAPI = async (data: AlbumEntity):Promise<BaseResponse<AlbumEntit
     );
     console.log("CreateAlbumAPI返回结果:", result);
     return result;
-}       
+}
 
+/**
+ * 获取专辑详情
+ * @param albumId 专辑ID
+ * @returns 专辑详情
+ */
+const GetAlbumDetailAPI = async (albumId: string):Promise<BaseResponse<AlbumEntity> | undefined> => {
+    console.log("调用GetAlbumDetailAPI, 入参:", albumId);
+    const result = await BaseApi<BaseResponse<AlbumEntity>>(
+        MethodType.GET,
+        `/api/v1/album/${albumId}`,
+        null,
+        null,
+        null,
+        { Authorization: `Bearer ${GetAuthorizationToken()}` },
+    );
+    console.log("GetAlbumDetailAPI返回结果:", result);
+    return result;
+}
 
-export { GetAlbumListAPI, CreateAlbumAPI }
+export { GetAlbumListAPI, CreateAlbumAPI, GetAlbumDetailAPI };

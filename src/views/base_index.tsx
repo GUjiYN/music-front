@@ -56,7 +56,7 @@ export function BaseIndex(): JSX.Element {
         <div className="w-full max-w-[100vw] overflow-x-hidden">
             <div className="flex flex-col min-h-dvh bg-gradient-to-b from-stone-300 to-stone-400 w-full">
                 {/* 导航栏 */}
-                <nav className="p-4 w-full bg-stone-300 backdrop-blur-md sticky top-0 z-10 shadow-sm">
+                <nav className="p-4 w-full bg-stone-300 backdrop-blur-md fixed top-0 z-10 shadow-sm">
                     <div className="w-full px-4 md:px-8 flex justify-between items-center">
                         <div className="text-3xl font-extrabold text-stone-700 font-serif tracking-wider italic">TS</div>
                         <div className="flex gap-6">
@@ -104,7 +104,7 @@ export function BaseIndex(): JSX.Element {
                             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-gray-800"></div>
                         </div>
                     ) : (
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <div className="max-w-7xl mx-auto grid  md:grid-cols-2 lg:grid-cols-3 gap-6">
                             {(() => { console.log("渲染时的albumList:", albumList); return null; })()}
                             {albumList && albumList.length > 0 ? albumList.map((album) => (
                                 <AlbumCard 
