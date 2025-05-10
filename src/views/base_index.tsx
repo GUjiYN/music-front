@@ -75,13 +75,18 @@ export function BaseIndex(): JSX.Element {
                         <div className="bg-white/70 backdrop-blur-md p-6 rounded-lg max-w-lg">
                             <h1 className="text-5xl font-bold text-stone-600">Taylor Swift</h1>
                             <p className="mt-4 text-lg text-stone-600">探索Taylor Swift的音乐世界，从处女作到最新专辑的完整音乐旅程</p>
-                            <button className="mt-6 bg-stone-500 text-white px-6 py-2 rounded-full hover:bg-stone-600 transition-colors">浏览专辑</button>
+                            <button 
+                                onClick={() => {
+                                    document.getElementById('albums-section')?.scrollIntoView({ behavior: 'smooth' });
+                                }} 
+                                className="mt-6 bg-stone-500 text-white px-6 py-2 rounded-full hover:bg-stone-600 transition-colors"
+                            >浏览专辑</button>
                         </div>
                     </div>
                 </div>
                 
                 {/* 推荐专辑部分 */}
-                <div className="w-full px-4 md:px-8 py-12">
+                <div id="albums-section" className="w-full px-4 md:px-8 py-12">
                     <div className="flex justify-between items-center mb-8">
                         <h2 className="text-3xl font-bold text-stone-700">热门专辑</h2>
                         <button 

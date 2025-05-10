@@ -73,9 +73,9 @@ export function AlbumCreate() {
 
     try {
       const response = await CreateAlbumAPI(createAlbumData);
-      if (response?.code === 0 && response?.data?.album_uuid) {
+      if (response?.code === 0) {
         // 成功创建专辑
-        navigate(`/album/${response.data.album_uuid}`);
+        navigate(`/`);
       } else {
         // 显示错误
         alert(response?.message || '创建专辑失败');
@@ -94,14 +94,14 @@ export function AlbumCreate() {
         {/* 导航栏 */}
         <nav className="p-4 w-full bg-white/80 backdrop-blur-md sticky top-0 z-10 shadow-sm">
           <div className="w-full px-4 md:px-8 flex justify-between items-center">
-            <div className="text-2xl font-bold text-purple-600">Taylor's World</div>
-            <div className="flex gap-6">
-              <a href="/" className="hover:text-purple-600 transition-colors">首页</a>
-              <a href="#" className="hover:text-purple-600 transition-colors">专辑</a>
-              <a href="#" className="hover:text-purple-600 transition-colors">歌曲</a>
-              <a href="#" className="hover:text-purple-600 transition-colors">演唱会</a>
-              <a href="#" className="hover:text-purple-600 transition-colors">关于</a>
-            </div>
+          <div className="text-3xl font-extrabold text-stone-700 font-serif tracking-wider italic">TS</div>
+          <div className="flex gap-6">
+                            <a href="#" className="hover:text-gray-400 transition-colors text-stone-700 font-bold font-serif tracking-wider">首页</a>
+                            <a href="#" className="hover:text-gray-400 transition-colors text-stone-700 font-bold font-serif tracking-wider">专辑</a>
+                            <a href="#" className="hover:text-gray-400 transition-colors text-stone-700 font-bold font-serif tracking-wider">歌曲</a>
+                            <a href="#" className="hover:text-gray-400 transition-colors text-stone-700 font-bold font-serif tracking-wider">演唱会</a>
+                            <a href="#" className="hover:text-gray-400 transition-colors text-stone-700 font-bold font-serif tracking-wider">关于</a>
+          </div>
           </div>
         </nav>
         
@@ -109,14 +109,14 @@ export function AlbumCreate() {
         <div className="w-full px-4 md:px-8 py-8">
           <div className="max-w-4xl mx-auto">
             <div className="bg-white rounded-lg shadow-md p-6">
-              <h1 className="text-2xl font-bold text-purple-800 mb-6">创建新专辑</h1>
+              <h1 className="text-2xl font-bold text-stone-700 mb-6">创建新专辑</h1>
               
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {/* 左侧表单 */}
                   <div className="space-y-4">
                     <fieldset className="border rounded-lg p-4 border-gray-300">
-                      <legend className="text-sm font-medium text-purple-600 px-2">专辑名称</legend>
+                      <legend className="text-sm font-medium text-stone-700 px-2">专辑名称</legend>
                       <input 
                         type="text" 
                         name="title" 
@@ -129,7 +129,7 @@ export function AlbumCreate() {
                     </fieldset>
                     
                     <fieldset className="border rounded-lg p-4 border-gray-300">
-                      <legend className="text-sm font-medium text-purple-600 px-2">发行日期</legend>
+                      <legend className="text-sm font-medium text-stone-700 px-2">发行日期</legend>
                       <input 
                         type="date" 
                         name="release_date" 
@@ -141,7 +141,7 @@ export function AlbumCreate() {
                     </fieldset>
                     
                     <fieldset className="border rounded-lg p-4 border-gray-300">
-                      <legend className="text-sm font-medium text-purple-600 px-2">制作人</legend>
+                      <legend className="text-sm font-medium text-stone-700 px-2">制作人</legend>
                       <input 
                         type="text" 
                         name="producer" 
@@ -154,7 +154,7 @@ export function AlbumCreate() {
                     
                     <div className="grid grid-cols-2 gap-4">
                       <fieldset className="border rounded-lg p-4 border-gray-300">
-                        <legend className="text-sm font-medium text-purple-600 px-2">歌曲数量</legend>
+                        <legend className="text-sm font-medium text-stone-700 px-2">歌曲数量</legend>
                         <input 
                           type="number" 
                           name="total_songs" 
@@ -167,7 +167,7 @@ export function AlbumCreate() {
                       </fieldset>
                       
                       <fieldset className="border rounded-lg p-4 border-gray-300">
-                        <legend className="text-sm font-medium text-purple-600 px-2">总时长</legend>
+                        <legend className="text-sm font-medium text-stone-700 px-2">总时长</legend>
                         <input 
                           type="text" 
                           name="total_duration" 
@@ -180,7 +180,7 @@ export function AlbumCreate() {
                     </div>
                     
                     <fieldset className="border rounded-lg p-4 border-gray-300">
-                      <legend className="text-sm font-medium text-purple-600 px-2">专辑描述</legend>
+                      <legend className="text-sm font-medium text-stone-700 px-2">专辑描述</legend>
                       <textarea 
                         name="description" 
                         value={createAlbumData.description} 
@@ -195,7 +195,7 @@ export function AlbumCreate() {
                   {/* 右侧 */}
                   <div className="space-y-4">
                     <fieldset className="border rounded-lg p-4 border-gray-300">
-                      <legend className="text-sm font-medium text-purple-600 px-2">专辑封面</legend>
+                      <legend className="text-sm font-medium text-stone-700 px-2">专辑封面</legend>
                       <div 
                         className="border-2 border-dashed border-gray-300 rounded-lg p-4 text-center hover:border-purple-500 transition-colors cursor-pointer"
                         onClick={handleUploadAreaClick}
@@ -203,7 +203,7 @@ export function AlbumCreate() {
                         {isProcessingImage ? (
                           <div className="py-4">
                             <div className="loading loading-spinner loading-md mx-auto"></div>
-                            <p className="mt-2 text-sm text-purple-600">正在处理图片...</p>
+                            <p className="mt-2 text-sm text-stone-700">正在处理图片...</p>
                           </div>
                         ) : previewImage ? (
                           <div className="relative">
@@ -233,7 +233,7 @@ export function AlbumCreate() {
                             </svg>
                             <p className="mt-1 text-sm text-gray-500">点击或拖拽上传封面图片</p>
                             <p className="text-xs text-gray-400">支持各种常见图片格式</p>
-                            <p className="text-xs text-purple-500 mt-1">建议图片不超过5MB</p>
+                            <p className="text-xs text-red-400 mt-1">建议图片不超过5MB</p>
                           </div>
                         )}
                       </div>
@@ -248,7 +248,7 @@ export function AlbumCreate() {
                     </fieldset>
                     
                     <fieldset className="border rounded-lg p-4 border-gray-300">
-                      <legend className="text-sm font-medium text-purple-600 px-2">背景故事</legend>
+                      <legend className="text-sm font-medium text-stone-700 px-2">背景故事</legend>
                       <textarea 
                         name="background_story" 
                         value={createAlbumData.background_story} 
