@@ -45,7 +45,7 @@ export const AlbumCard: React.FC<AlbumProps> = ({
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
               </svg>
             </span>
-            <span className="absolute inset-0 bg-stone-100 transform -translate-x-full group-hover/btn:translate-x-0 transition-transform duration-300 ease-out"></span>
+            <span className="absolute inset-0 bg-stone-200 transform -translate-x-full group-hover/btn:translate-x-0 transition-transform duration-300 ease-out"></span>
           </button>
         </div>
       </div>
