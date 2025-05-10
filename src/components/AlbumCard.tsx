@@ -32,15 +32,22 @@ export const AlbumCard: React.FC<AlbumProps> = ({
           <span className="text-white text-sm font-medium">{trackCount} 首歌曲</span>
         </div>
       </div>
-      <div className="p-4">
-        <h3 className="text-xl font-semibold text-purple-800">{title}</h3>
-        <p className="text-gray-600 mt-1">发行于 {releaseYear}</p>
-        <button className="mt-4 text-purple-600 font-medium hover:underline flex items-center gap-1">
-          <span>查看专辑</span>
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-          </svg>
-        </button>
+      <div className="p-4 flex flex-col">
+        <div className="space-y-1 mb-3">
+          <h3 className="text-xl font-semibold text-stone-600 leading-tight">{title}</h3>
+          <p className="text-stone-500 text-sm">{releaseYear} 年发行</p>
+        </div>
+        <div className="mt-auto">
+          <button className="w-full mt-2 border border-stone-600 text-stone-600 font-medium relative overflow-hidden group/btn py-2 rounded-md">
+            <span className="relative z-10 flex items-center justify-center gap-2">
+              <span>查看专辑详情</span>
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 transition-transform duration-300 group-hover/btn:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
+            </span>
+            <span className="absolute inset-0 bg-stone-100 transform -translate-x-full group-hover/btn:translate-x-0 transition-transform duration-300 ease-out"></span>
+          </button>
+        </div>
       </div>
     </div>
   );

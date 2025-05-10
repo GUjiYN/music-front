@@ -54,17 +54,17 @@ export function BaseIndex(): JSX.Element {
 
     return (
         <div className="w-full max-w-[100vw] overflow-x-hidden">
-            <div className="flex flex-col min-h-dvh bg-gradient-to-b from-purple-100 to-pink-100 w-full">
+            <div className="flex flex-col min-h-dvh bg-gradient-to-b from-stone-300 to-stone-400 w-full">
                 {/* 导航栏 */}
-                <nav className="p-4 w-full bg-gray-800 backdrop-blur-md sticky top-0 z-10 shadow-sm">
+                <nav className="p-4 w-full bg-stone-300 backdrop-blur-md sticky top-0 z-10 shadow-sm">
                     <div className="w-full px-4 md:px-8 flex justify-between items-center">
-                        <div className="text-2xl font-bold text-white">TS</div>
+                        <div className="text-3xl font-extrabold text-stone-700 font-serif tracking-wider italic">TS</div>
                         <div className="flex gap-6">
-                            <a href="#" className="hover:text-gray-400 transition-colors text-white">首页</a>
-                            <a href="#" className="hover:text-gray-400 transition-colors text-white">专辑</a>
-                            <a href="#" className="hover:text-gray-400 transition-colors text-white">歌曲</a>
-                            <a href="#" className="hover:text-gray-400 transition-colors text-white">演唱会</a>
-                            <a href="#" className="hover:text-gray-400 transition-colors text-white">关于</a>
+                            <a href="#" className="hover:text-gray-400 transition-colors text-stone-700 font-bold font-serif tracking-wider">首页</a>
+                            <a href="#" className="hover:text-gray-400 transition-colors text-stone-700 font-bold font-serif tracking-wider">专辑</a>
+                            <a href="#" className="hover:text-gray-400 transition-colors text-stone-700 font-bold font-serif tracking-wider">歌曲</a>
+                            <a href="#" className="hover:text-gray-400 transition-colors text-stone-700 font-bold font-serif tracking-wider">演唱会</a>
+                            <a href="#" className="hover:text-gray-400 transition-colors text-stone-700 font-bold font-serif tracking-wider">关于</a>
                         </div>
                     </div>
                 </nav>
@@ -73,9 +73,9 @@ export function BaseIndex(): JSX.Element {
                 <div className="w-full bg-cover bg-center h-96" style={{backgroundImage: "url('https://placehold.co/1600x600/gray/white?text=Taylor+Swift+Banner')"}}>
                     <div className="w-full px-4 md:px-8 h-full flex items-center">
                         <div className="bg-white/70 backdrop-blur-md p-6 rounded-lg max-w-lg">
-                            <h1 className="text-5xl font-bold text-gray-800">Taylor Swift</h1>
-                            <p className="mt-4 text-lg text-gray-700">探索Taylor Swift的音乐世界，从处女作到最新专辑的完整音乐旅程</p>
-                            <button className="mt-6 bg-gray-800 text-white px-6 py-2 rounded-full hover:bg-gray-900 transition-colors">浏览专辑</button>
+                            <h1 className="text-5xl font-bold text-stone-600">Taylor Swift</h1>
+                            <p className="mt-4 text-lg text-stone-600">探索Taylor Swift的音乐世界，从处女作到最新专辑的完整音乐旅程</p>
+                            <button className="mt-6 bg-stone-500 text-white px-6 py-2 rounded-full hover:bg-stone-600 transition-colors">浏览专辑</button>
                         </div>
                     </div>
                 </div>
@@ -86,7 +86,7 @@ export function BaseIndex(): JSX.Element {
                         <h2 className="text-3xl font-bold text-gray-800">热门专辑</h2>
                         <button 
                             onClick={handleCreateAlbumClick}
-                            className="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-md flex items-center gap-2 transition-colors"
+                            className="bg-stone-500 hover:bg-stone-600 text-white px-4 py-2 rounded-md flex items-center gap-2 transition-colors"
                         >
                             <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                                 <path fillRule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clipRule="evenodd" />
