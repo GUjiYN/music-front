@@ -83,7 +83,7 @@ export function BaseIndex(): JSX.Element {
                 {/* 推荐专辑部分 */}
                 <div className="w-full px-4 md:px-8 py-12">
                     <div className="flex justify-between items-center mb-8">
-                        <h2 className="text-3xl font-bold text-gray-800">热门专辑</h2>
+                        <h2 className="text-3xl font-bold text-stone-700">热门专辑</h2>
                         <button 
                             onClick={handleCreateAlbumClick}
                             className="bg-stone-500 hover:bg-stone-600 text-white px-4 py-2 rounded-md flex items-center gap-2 transition-colors"
@@ -99,7 +99,7 @@ export function BaseIndex(): JSX.Element {
                             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-gray-800"></div>
                         </div>
                     ) : (
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                             {(() => { console.log("渲染时的albumList:", albumList); return null; })()}
                             {albumList && albumList.length > 0 ? albumList.map((album) => (
                                 <AlbumCard 
@@ -112,7 +112,7 @@ export function BaseIndex(): JSX.Element {
                                     onClick={() => handleAlbumClick(album.album_uuid || "")}
                                 />
                             )) : (
-                                <div className="col-span-4 text-center py-12 text-gray-500">
+                                <div className="col-span-3 text-center py-12 text-gray-500">
                                     暂无专辑数据 (albumList长度: {albumList ? albumList.length : 'null/undefined'})
                                 </div>
                             )}
