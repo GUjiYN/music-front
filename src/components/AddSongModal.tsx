@@ -17,17 +17,17 @@ export const AddSongModal: React.FC<AddSongModalProps> = ({
   onSongAdded 
 }) => {
   const [songData, setSongData] = useState<SongEntity>({
-    album_id: albumId,
-    song_title: '',
+    albumId: albumId,
+    songTitle: '',
     duration: '',
     writer: 'Taylor Swift',
     producer: '',
     genre: '',
     language: '英语',
     lyrics: '',
-    release_date: '',
-    release_version: '',
-    is_single: false,
+    releaseDate: '',
+    releaseVersion: '',
+    isSingle: 0,
     label: '',
     instruments: ''
   });
@@ -56,7 +56,7 @@ export const AddSongModal: React.FC<AddSongModalProps> = ({
     e.preventDefault();
     
     // 验证表单
-    if (!songData.song_title) {
+    if (!songData.songTitle) {
       message.error('请输入歌曲名称');
       return;
     }
@@ -85,17 +85,17 @@ export const AddSongModal: React.FC<AddSongModalProps> = ({
 
   const resetForm = () => {
     setSongData({
-      album_id: albumId,
-      song_title: '',
+      albumId: albumId,
+      songTitle: '',
       duration: '',
       writer: 'Taylor Swift',
       producer: '',
       genre: '',
       language: '英语',
       lyrics: '',
-      release_date: '',
-      release_version: '',
-      is_single: false,
+      releaseDate: '',
+      releaseVersion: '',
+      isSingle: 0,
       label: '',
       instruments: ''
     });
@@ -117,8 +117,8 @@ export const AddSongModal: React.FC<AddSongModalProps> = ({
             </label>
             <input 
               type="text" 
-              name="song_title"
-              value={songData.song_title || ''}
+              name="songTitle"
+              value={songData.songTitle || ''}
               onChange={handleInputChange}
               placeholder="请输入歌曲名称" 
               className="input input-bordered w-full" 
@@ -214,11 +214,11 @@ export const AddSongModal: React.FC<AddSongModalProps> = ({
                 <span className="label-text">是否单曲</span>
               </label>
               <select 
-                name="is_single"
-                value={songData.is_single ? '1' : '0'}
+                name="isSingle"
+                value={songData.isSingle?.toString() || '0'}
                 onChange={(e) => {
-                  const value = e.target.value === '1';
-                  setSongData({ ...songData, is_single: value });
+                  const value = parseInt(e.target.value);
+                  setSongData({ ...songData, isSingle: value });
                 }}
                 className="select select-bordered w-full"
               >
@@ -246,8 +246,8 @@ export const AddSongModal: React.FC<AddSongModalProps> = ({
             </label>
             <input 
               type="date" 
-              name="release_date"
-              value={songData.release_date || ''}
+              name="releaseDate"
+              value={songData.releaseDate || ''}
               onChange={handleInputChange}
               className="input input-bordered w-full"
             />
@@ -258,8 +258,8 @@ export const AddSongModal: React.FC<AddSongModalProps> = ({
             </label>
             <input 
               type="text" 
-              name="release_version"
-              value={songData.release_version || ''}
+              name="releaseVersion"
+              value={songData.releaseVersion || ''}
               onChange={handleInputChange}
               placeholder="例如: 1.0"
               className="input input-bordered w-full"
