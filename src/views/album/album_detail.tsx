@@ -1,11 +1,11 @@
 import {JSX, useEffect, useState} from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { SongItem } from '../../components/SongItem';
 import { AlbumEntity } from '../../models/entity/album_entity';
 import { SongEntity } from '../../models/entity/song_entity';
 import { GetAlbumDetailAPI } from '../../api/album_api';
 import { GetAlbumSongsAPI } from '../../api/song_api';
 import { message } from 'antd';
+import { AddSongModal } from '../../components/AddSongModal';
 
 export function AlbumDetail(): JSX.Element {
   const { id } = useParams<{ id: string }>();
@@ -14,6 +14,7 @@ export function AlbumDetail(): JSX.Element {
   const [songs, setSongs] = useState<SongEntity[]>([]);
   const [isPlaying, setIsPlaying] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [isAddSongModalOpen, setIsAddSongModalOpen] = useState(false);
 
   useEffect(() => {
     if (!id) return;
@@ -48,7 +49,16 @@ export function AlbumDetail(): JSX.Element {
     fetchAlbumData();
   }, [id, navigate]);
 
-
+  const handleAddSong = (newSong: SongEntity) => {
+    setSongs([...songs, newSong]);
+    // 更新专辑歌曲总数
+    if (album) {
+      setAlbum({
+        ...album,
+        total_songs: (album.total_songs || 0) + 1
+      });
+    }
+  };
 
   if (loading) {
     return (
@@ -179,7 +189,7 @@ export function AlbumDetail(): JSX.Element {
                     <div></div>
                     <button 
                       className="px-4 py-2 bg-stone-700 text-white rounded-md hover:bg-stone-800 flex items-center gap-2"
-                      onClick={() => console.log('添加歌曲')}
+                      onClick={() => setIsAddSongModalOpen(true)}
                     >
                       <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                         <path fillRule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clipRule="evenodd" />
@@ -187,24 +197,62 @@ export function AlbumDetail(): JSX.Element {
                       <span>添加歌曲</span>
                     </button>
                   </div>
-                  {songs.length > 0 ? (
-                    <div className="bg-gray-50 rounded-lg">
-                      {songs.map((song) => (
-                        <SongItem
-                          key={song.songUuid}
-                          id={song.songUuid || ''}
-                          title={song.songTitle || ''}
-                          albumTitle={album.title || ''}
-                          duration={song.duration || ''}
-                          onPlay={() => console.log(`Playing song: ${song.songTitle}`)}
-                        />
-                      ))}
-                    </div>
-                  ) : (
-                    <div className="text-center py-8 bg-gray-50 rounded-lg text-gray-500">
-                      暂无歌曲数据
-                    </div>
-                  )}
+                  
+                  {/* 歌曲列表 */}
+                  <div className="overflow-x-auto">
+                    <table className="table table-zebra w-full">
+                      <thead>
+                        <tr className="bg-stone-100">
+                          <th className="w-16 text-center">#</th>
+                          <th>歌曲名称</th>
+                          <th>演唱者</th>
+                          <th>时长</th>
+                          <th>操作</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {songs.length > 0 ? (
+                          songs.map((song, index) => (
+                            <tr key={index} className="hover:bg-stone-50">
+                              <td className="text-center font-medium text-gray-500">{index + 1}</td>
+                              <td>
+                                <div className="flex items-center gap-2">
+                                  {song.songTitle || ''}
+                                </div>
+                              </td>
+                              <td>{song.writer || ''}</td>
+                              <td>{song.duration || '--:--'}</td>
+                              <td>
+                                <div className="flex items-center gap-2">
+                                  <button className="btn btn-ghost btn-sm">
+                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                      <path d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" />
+                                    </svg>
+                                  </button>
+                                  <button className="btn btn-ghost btn-sm">
+                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                      <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
+                                    </svg>
+                                  </button>
+                                  <button className="btn btn-ghost btn-sm text-red-500">
+                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                      <path fillRule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clipRule="evenodd" />
+                                    </svg>
+                                  </button>
+                                </div>
+                              </td>
+                            </tr>
+                          ))
+                        ) : (
+                          <tr>
+                            <td colSpan={5} className="text-center py-8 text-gray-500">
+                              暂无歌曲数据
+                            </td>
+                          </tr>
+                        )}
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
               </div>
             </div>
@@ -262,6 +310,16 @@ export function AlbumDetail(): JSX.Element {
           </div>
         </footer>
       </div>
+      
+      {/* 添加歌曲对话框 */}
+      {id && (
+        <AddSongModal 
+          albumId={id}
+          isOpen={isAddSongModalOpen}
+          onClose={() => setIsAddSongModalOpen(false)}
+          onSongAdded={handleAddSong}
+        />
+      )}
     </div>
   );
 } 

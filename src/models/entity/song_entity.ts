@@ -10,6 +10,7 @@ export type SongEntity = {
     lyrics?: string;
     producer?: string;
     releaseDate?: string;
+    releaseVersion?: string;
     songTitle?: string;
     songUuid?: string;
     updatedAt?: string;
