@@ -6,6 +6,7 @@ import { GetAlbumDetailAPI } from '../../api/album_api';
 import { GetAlbumSongsAPI } from '../../api/song_api';
 import { message } from 'antd';
 import { AddSongModal } from '../../components/AddSongModal';
+import {Delete, Editor, AddFour} from "@icon-park/react";
 
 export function AlbumDetail(): JSX.Element {
   const { id } = useParams<{ id: string }>();
@@ -81,9 +82,9 @@ export function AlbumDetail(): JSX.Element {
 
   return (
     <div className="w-full max-w-[100vw] overflow-x-hidden">
-      <div className="min-h-dvh bg-gradient-to-b from-stone-300 to-stone-400 w-full">
+      <div className="min-h-dvh bg-gradient-to-b from-pink-50 to-pink-100 w-full">
         {/* 导航栏 */}
-        <nav className="p-4 w-full bg-stone-300 backdrop-blur-md fixed top-0 z-10 shadow-sm">
+        <nav className="p-4 w-full bg-pink-100 backdrop-blur-md fixed top-0 z-10 shadow-sm">
           <div className="w-full px-4 md:px-8 flex justify-between items-center">
             <div className="text-3xl font-extrabold text-stone-700 font-serif tracking-wider italic">TS</div>
             <div className="flex gap-6">
@@ -140,17 +141,14 @@ export function AlbumDetail(): JSX.Element {
             <div className="flex-1">
               <div className="bg-white p-6 rounded-lg shadow-md">
                 <div className="flex items-center gap-3 mb-1">
-                  <h1 className="text-3xl font-bold text-stone-800">{album.title}</h1>
-                  <span className="text-gray-500">({releaseYear})</span>
+                  <h1 className="text-3xl font-bold text-stone-700">{album.title}</h1>
                 </div>
-                <p className="text-lg text-gray-700 mb-4">Taylor Swift</p>
-                
                 <div className="flex flex-wrap items-center gap-4 mb-6">
                   <div className="px-3 py-1 bg-stone-100 text-stone-700 rounded-full text-sm">
                     {album.total_songs || 0} 首歌曲
                   </div>
                   {album.total_duration && (
-                    <div className="text-gray-500 text-sm flex items-center gap-1">
+                    <div className="text-stone-700 text-sm flex items-center gap-1">
                       <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                       </svg>
@@ -158,12 +156,12 @@ export function AlbumDetail(): JSX.Element {
                     </div>
                   )}
                   {album.producer && (
-                    <div className="text-gray-500 text-sm">
+                    <div className="text-stone-700 text-sm">
                       制作人: {album.producer}
                     </div>
                   )}
                   {album.release_date && (
-                    <div className="text-gray-500 text-sm">
+                    <div className="text-stone-700 text-sm">
                       发行日期: {new Date(album.release_date).toLocaleDateString()}
                     </div>
                   )}
@@ -188,86 +186,68 @@ export function AlbumDetail(): JSX.Element {
                   <div className="flex justify-between items-center mb-4">
                     <div></div>
                     <button 
-                      className="px-4 py-2 bg-stone-700 text-white rounded-md hover:bg-stone-800 flex items-center gap-2"
+                      className="px-4 py-2 bg-stone-600 text-white rounded-md hover:bg-stone-700 flex items-center gap-2"
                       onClick={() => setIsAddSongModalOpen(true)}
                     >
-                      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                        <path fillRule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clipRule="evenodd" />
-                      </svg>
+                      <AddFour theme="outline" size="20"/>
                       <span>添加歌曲</span>
                     </button>
                   </div>
                   
                   {/* 歌曲列表 */}
-                  <div className="overflow-x-auto">
-                    <table className="table table-zebra w-full">
-                      <thead>
-                        <tr className="bg-stone-100">
-                          <th className="w-16 text-center">#</th>
-                          <th>歌曲名称</th>
-                          <th>演唱者</th>
-                          <th>时长</th>
-                          <th>操作</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {songs.length > 0 ? (
-                          songs.map((song, index) => (
-                            <tr key={index} className="hover:bg-stone-50">
-                              <td className="text-center font-medium text-gray-500">{index + 1}</td>
-                              <td>
-                                <div className="flex items-center gap-2">
-                                  {song.songTitle || ''}
-                                </div>
-                              </td>
-                              <td>{song.writer || ''}</td>
-                              <td>{song.duration || '--:--'}</td>
-                              <td>
-                                <div className="flex items-center gap-2">
-                                  <button className="btn btn-ghost btn-sm">
-                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                                      <path d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" />
-                                    </svg>
-                                  </button>
-                                  <button className="btn btn-ghost btn-sm">
-                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                                      <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
-                                    </svg>
-                                  </button>
-                                  <button className="btn btn-ghost btn-sm text-red-500">
-                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                                      <path fillRule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clipRule="evenodd" />
-                                    </svg>
-                                  </button>
-                                </div>
+                  <div className="w-full">
+                    <div className="max-h-[220px] overflow-y-auto overflow-x-hidden">
+                      <table className="table table-zebra w-full">
+                        <thead className="sticky top-0 z-10">
+                          <tr className="bg-stone-100">
+                            <th className="w-16 text-center">#</th>
+                            <th>歌曲名称</th>
+                            <th>演唱者</th>
+                            <th>时长</th>
+                            <th>操作</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {songs.length > 0 ? (
+                            songs.map((song, index) => (
+                              <tr key={index} className="hover:bg-stone-50">
+                                <td className="text-center font-medium text-gray-500">{index + 1}</td>
+                                <td>
+                                  <div className="flex items-center gap-2">
+                                    {song.songTitle || ''}
+                                  </div>
+                                </td>
+                                <td>{song.writer || ''}</td>
+                                <td>{song.duration || '--:--'}</td>
+                                <td>
+                                  <div className="flex items-center">
+                                    <button className="btn btn-soft btn-info">
+                                      <Editor theme="outline" size="16"/>
+                                    </button>
+                                    <button className="btn btn-soft btn-error">
+                                      <Delete theme="outline" size="16" />
+                                    </button>
+                                  </div>
+                                </td>
+                              </tr>
+                            ))
+                          ) : (
+                            <tr>
+                              <td colSpan={5} className="text-center py-8 text-gray-500">
+                                暂无歌曲数据
                               </td>
                             </tr>
-                          ))
-                        ) : (
-                          <tr>
-                            <td colSpan={5} className="text-center py-8 text-gray-500">
-                              暂无歌曲数据
-                            </td>
-                          </tr>
-                        )}
-                      </tbody>
-                    </table>
+                          )}
+                        </tbody>
+                      </table>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        
-        {/* 相关专辑推荐 - 这部分可以在未来实现，目前先保留结构 */}
-        <div className="w-full bg-white py-6">
-          <div className="w-full px-4 md:px-8">
-            <h2 className="text-2xl font-bold mb-6 text-stone-800">你可能也喜欢</h2>
-            <div className="text-center py-8 text-gray-500">
-              相关专辑推荐功能正在开发中...
-            </div>
-          </div>
-        </div>
+    
         
         {/* 页脚 */}
         <footer className="w-full bg-gray-800 text-white py-8">
